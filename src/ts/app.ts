@@ -23,11 +23,7 @@ type GoogleGeocodingResponse = {
 function loadGoogleMapsApi(): Promise<void> {
   return new Promise((resolve, reject) => {
     // Check if Google Maps script is already loaded
-    if (
-      typeof window !== "undefined" &&
-      (window as any).google &&
-      (window as any).google.maps
-    ) {
+    if (window?.google?.maps) {
       resolve();
       return;
     }
@@ -47,7 +43,7 @@ function loadGoogleMapsApi(): Promise<void> {
     script.async = true;
     script.defer = true;
     script.onerror = (error) =>
-      reject(new Error(`Google Maps API failed to load: ${error}`));
+      reject(new Error(`Google Maps API failed to load:`));
     document.head.appendChild(script);
 
     // Resolve the promise once the script is loaded and callback is called
@@ -59,7 +55,7 @@ function loadGoogleMapsApi(): Promise<void> {
 
 async function initMap(coordinates: { lat: number; lng: number }) {
   // Request needed libraries
-  const { Map } = (await google.maps.importLibrary(
+  const { Map: GoogleMap } = (await google.maps.importLibrary(
     "maps"
   )) as google.maps.MapsLibrary;
   const { AdvancedMarkerElement } = (await google.maps.importLibrary(
@@ -67,14 +63,17 @@ async function initMap(coordinates: { lat: number; lng: number }) {
   )) as google.maps.MarkerLibrary;
 
   // Create the map and marker
-  const map = new Map(document.getElementById("map") as HTMLElement, {
-    zoom: 10,
-    center: coordinates,
-    mapId: "GOOGLE_MAPS_API_ID",
-  });
+  const mapInstance = new GoogleMap(
+    document.getElementById("map") as HTMLElement,
+    {
+      zoom: 10,
+      center: coordinates,
+      mapId: GOOGLE_MAPS_API_ID,
+    }
+  );
 
   const marker = new AdvancedMarkerElement({
-    map: map,
+    map: mapInstance,
     position: coordinates,
   });
 
@@ -83,9 +82,13 @@ async function initMap(coordinates: { lat: number; lng: number }) {
 
 async function searchAddressHandler(event: Event) {
   event.preventDefault();
-  const enteredAddress = (
-    document.getElementById("address")! as HTMLInputElement
-  ).value.trim();
+  const enteredAddress = addressInput.value.trim();
+
+  if (!enteredAddress) {
+    alert("Please enter a valid address.");
+    return;
+  }
+
   const encodedAddress = encodeURIComponent(enteredAddress);
 
   try {
@@ -105,13 +108,9 @@ async function searchAddressHandler(event: Event) {
 
     // Initialize the map with the obtained coordinates
     await initMap(coordinates);
-  } catch (err) {
-    if (err instanceof Error) {
-      alert(err.message);
-      console.error("Error:", err);
-    } else {
-      console.error("Unexpected error:", err);
-    }
+  } catch (err: unknown) {
+    alert((err as Error).message);
+    console.log("Error:", err);
   }
 }
 
