@@ -12,8 +12,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/google.maps": "^3.55.12",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^7.1.2",
+    "dotenv-webpack": "^8.1.0",
     "html-webpack-plugin": "^5.6.0",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",

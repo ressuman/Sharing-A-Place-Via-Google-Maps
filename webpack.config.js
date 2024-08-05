@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: "./src/ts/app.ts",
@@ -41,12 +42,18 @@ module.exports = {
       template: "./index.html",
       filename: "index.html",
     }),
+    new Dotenv(),
   ],
 
   devServer: {
-    static: {
-      directory: path.resolve(__dirname, "dist"),
-    },
+    // static: {
+    //   directory: path.resolve(__dirname, "dist"),
+    // },
+    static: [
+      {
+        directory: path.join(__dirname),
+      },
+    ],
     compress: true,
     port: 9000,
     open: true,
@@ -58,6 +65,7 @@ module.exports = {
 // const path = require("path");
 // const HtmlWebpackPlugin = require("html-webpack-plugin");
 // const CleanPlugin = require("clean-webpack-plugin");
+// const Dotenv = require('dotenv-webpack');
 
 // module.exports = {
 //   entry: "./src/ts/app.ts",
@@ -99,7 +107,7 @@ module.exports = {
 //       template: "./index.html",
 //       filename: "index.html",
 //     }),
-//     new CleanPlugin.CleanWebpackPlugin(),
+//     new CleanPlugin.CleanWebpackPlugin(), new Dotenv()
 //   ],
 
 //   devServer: {

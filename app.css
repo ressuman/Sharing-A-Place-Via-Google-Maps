@@ -3,10 +3,10 @@ html {
 }
 
 #map {
-  width: 90%;
-  height: 20rem;
+  width: 95%;
+  height: 39rem;
   border: 1px solid #ccc;
-  margin: 2rem auto;
+  margin: 1rem auto;
   display: flex;
   justify-content: center;
   align-items: center;
