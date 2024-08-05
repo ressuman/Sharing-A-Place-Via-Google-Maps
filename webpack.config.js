@@ -65,7 +65,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanPlugin = require("clean-webpack-plugin");
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   entry: "./src/ts/app.ts",
@@ -107,7 +107,8 @@ module.exports = {
       template: "./index.html",
       filename: "index.html",
     }),
-    new CleanPlugin.CleanWebpackPlugin(), new Dotenv()
+    new CleanPlugin.CleanWebpackPlugin(),
+    new Dotenv(),
   ],
 
   devServer: {
