@@ -101,5 +101,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Here is an expected gif of the final project
 
-![Sharing A Place Via Google Maps API gif](./src/images/drag-and-drop.gif)
+![Sharing A Place Via Google Maps API gif](./src/images/sharing-place-google-maps.gif)
 .
